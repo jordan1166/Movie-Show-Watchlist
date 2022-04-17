@@ -41,11 +41,11 @@ const saveToLocalStorage = (item) => {
 }
 
 const getDisplayedData = () => {
-    const movies = Object.keys(localStorage)
     // get data that is already displayed to the user
     // so that data can be saved to local storage
     movieWatchList = document.querySelector('.movie-watchlist')
     movieWatchList.addEventListener('click', (event) => {
+        const movies = Object.keys(localStorage)
         if (checkIfItemInLocalStorage(movies)) {
             // when user clicks the "Watchlist" button  the .closest method travels up the DOM tree
             // to find the closest div element with a "name" attribute
