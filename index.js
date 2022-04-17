@@ -41,15 +41,35 @@ const saveToLocalStorage = (item) => {
 }
 
 const getDisplayedData = () => {
+    const movies = Object.keys(localStorage)
     // get data that is already displayed to the user
     // so that data can be saved to local storage
     movieWatchList = document.querySelector('.movie-watchlist')
     movieWatchList.addEventListener('click', (event) => {
-        // when user clicks the "Watchlist" button  the .closest method travels up the DOM tree
-        // to find the closest div element with a "name" attribute
-        let parentNode = event.target.closest('div[name]').getAttribute('name')
-        saveToLocalStorage(parentNode)
+        if (checkIfItemInLocalStorage(movies)) {
+            // when user clicks the "Watchlist" button  the .closest method travels up the DOM tree
+            // to find the closest div element with a "name" attribute
+            let parentNode = event.target.closest('div[name]').getAttribute('name')
+            saveToLocalStorage(parentNode)
+        } else {
+            alert(`${data.Title} is already on your watch list`)
+        }
     })
+}
+
+const checkIfItemInLocalStorage = (movies) => {
+    let count = 1;
+    const maxNumber = Math.max(...movies)
+    for (let i = 0; i <= maxNumber; i++) {
+        const movie = localStorage.getItem(count)
+        if (movie !== null) {
+            if (movie.includes(data.Title)) {
+                return false;
+            } 
+        }
+        count++;
+    }
+    return true;
 }
 
 const getDataFromAPI = async () => {
@@ -95,4 +115,4 @@ const displayData = () => {
     `
     movieList.insertAdjacentHTML('afterbegin', html)
     // console.log(movieList.children[0].innerHTML)
-}   
+}  
